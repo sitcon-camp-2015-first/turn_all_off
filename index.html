@@ -13,9 +13,9 @@
         const r_size = 10;
         const c_size = 10;
         var num_on_bulbs = 0;
-        var on_bulb_start = '<img src="on.png" id="';
+//        var on_bulb = '<img src="on.png"/>';
         var off_bulb_start = '<img src="off.png" id="';
-        var img_end = '"/>';
+        var img_end = '/>';
             
         
 
@@ -29,12 +29,12 @@
             var idx = 'row' + r;
  
             for( var c = 0 ; c < c_size ; ++c){
-                
                 board[r][c] = false;
                 index[r][c] = idx + "col" + c;
 //                alert(index[r][c]);
 
-                cur_row += ( "<td>" +  off_bulb_start + index[r][c] + img_end + "</td>" );
+                $( '#' + index[r][c] ).css( "background-image" , "url(on.png)" );  
+                cur_row += ( '<td>' +  off_bulb_start + index[r][c] + '" onclick="press(' + r + ',' + c + ')"' + img_end + "</td>" );
 
             }
 
@@ -49,14 +49,16 @@
                         if( j >= 0 && j < c_size )
                         {
                             board[i][j] = !board[i][j];
-                            if(board[i][j])
+                            if(board[i][j]){
                                 on_bulbs++;
-                            else on_bulbs--;
+                                $( "#" + index[i][j] ).toggle();
+                            }
+                            else{
+                                on_bulbs--;
+                                $( "#" + index[i][j] ).toggle();
+                            }
                         }
         }
-
-
-        
 
     });
     </script>
