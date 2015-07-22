@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Turn all off!</title>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+    <script>
+    $(document).ready(function(){
+        var board = new Array ();
+        var index = new Array ();
+        const r_size = 10;
+        const c_size = 10;
+        var num_on_bulbs = 0;
+        var on_bulb_start = '<img src="on.png" id="';
+        var off_bulb_start = '<img src="off.png" id="';
+        var img_end = '"/>';
+            
+        
+
+//        $("#Board").append();
+        for (var r = 0; r < r_size; ++r) {
+            
+            var cur_row = "<tr>";
+
+            board[r]= new Array();
+            index[r] = new Array()
+            var idx = 'row' + r;
+ 
+            for( var c = 0 ; c < c_size ; ++c){
+                
+                board[r][c] = false;
+                index[r][c] = idx + "col" + c;
+//                alert(index[r][c]);
+
+                cur_row += ( "<td>" +  off_bulb_start + index[r][c] + img_end + "</td>" );
+
+            }
+
+            cur_row += "</tr>";
+            $("#Board").append( cur_row );
+        }
+
+        function press( r , c ){
+            for(var i = r-1 ; i <= (r+1) ; i++ )
+                if( i >= 0 && i < r_size)
+                    for(var j = c-1 ; j <= (c+1) ; j++ )
+                        if( j >= 0 && j < c_size )
+                        {
+                            board[i][j] = !board[i][j];
+                            if(board[i][j])
+                                on_bulbs++;
+                            else on_bulbs--;
+                        }
+        }
+
+
+        
+
+    });
+    </script>
+
+    <div>
+        <table border="1" id="Board">
+        </table>
+    </div>
+
+</body>
+</html>
