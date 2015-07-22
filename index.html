@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Turn all off!</title>
+    <title>DELight !</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
 </head>
 <body>
@@ -10,8 +10,9 @@
 
     var board = new Array ();
     var index = new Array ();
-    const r_size = 10;
-    const c_size = 10;
+    const r_size = 5;
+    const c_size = 5;
+    const size = r_size * c_size;
     var num_on_bulbs = 0;
     var on_bulb_start = '<img src="on.png" id="';
     var off_bulb_start = '<img src="off.png" id="';
@@ -53,14 +54,36 @@
             }
         }
 
+    function float2int( val ){
+        return val | 0;
+    }
+
+    function random_question( q_size ){
+        var node_list = new Array();
+        var base = ( r_size > c_size ) ? r_size : c_size ;
+        var j = 0;
+
+        for( var r = 0 ; r < r_size ; r++ )
+            for( var c = 0 ; c < c_size ; c++ )
+                node_list[ j++ ] = ( r * base + c  );
+
+        for( var i = 0 ; i < q_size ; i++ )
+        {
+            var rn = i + float2int( Math.random() * ( size - i ) ) ;
+            var t = node_list[i] ;
+            node_list[i] = node_list[rn] ;
+            node_list[rn] = t;
+
+            press( node_list[i] / base , node_list[i] % base );
+        }
+    }
 
     $(document).ready(function(){
            
-      for( var r = 0 ; r < r_size ; r++ ){
+        for( var r = 0 ; r < r_size ; r++ ){
 
             var cur_row = "<tr>";
             for( var c = 0 ; c < c_size ; c++ ){
-                $( '#' + index[r][c] ).css( "background-image" , "url(on.png)" );  
                 cur_row += ( '<td>' +  
                         off_bulb_start + index[r][c][0] + '" onclick="press(' + r + ',' + c + ')"' + img_end + 
                         on_bulb_start + index[r][c][1] + '" onclick="press(' + r + ',' + c + ')"' + img_end + 
@@ -70,11 +93,13 @@
 
             $("#Board").append( cur_row );
 
-            for( var c = 0 ; c < c_size ; c++ ){
+            for( var c = 0 ; c < c_size ; c++ )
                 $( "#" + index[r][c][1] ).toggle();
-            }
-      }
- 
+
+        }
+
+        while( num_on_bulbs == 0 )
+            random_question( 9 );
     });
     </script>
 
