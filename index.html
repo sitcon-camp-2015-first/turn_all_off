@@ -13,7 +13,7 @@
     const r_size = 10;
     const c_size = 10;
     var num_on_bulbs = 0;
-    var on_bulb = '<img src="on.png" id=';
+    var on_bulb_start = '<img src="on.png" id="';
     var off_bulb_start = '<img src="off.png" id="';
     var img_end = '/>';
 
@@ -23,7 +23,11 @@
             var idx = 'row' + r;
             for( var c = 0 ; c < c_size ; ++c){
                 board[r][c] = false;
-                index[r][c] = idx + "col" + c;
+                index[r][c] = new Array();
+                for(var on = 0 ; on < 2 ; on++ )
+                {
+                    index[r][c][on] = idx + "col" + c + '_' + on;
+                }
             }
         }
 
@@ -34,13 +38,14 @@
                     for(var j = c-1 ; j <= (c+1) ; j++ ){
                         if( j >= 0 && j < c_size ){
                             board[i][j] = !board[i][j];
+                            for(var on = 0; on < 2 ; on++ )
+                                $( "#" + index[i][j][on] ).toggle();
+ 
                             if(board[i][j]){
                                 num_on_bulbs++;
-                                $( "#" + index[i][j] ).toggle();
                             }
                             else{
                                 num_on_bulbs--;
-                                $( "#" + index[i][j] ).toggle();
                             }
                         }
                     }
@@ -52,16 +57,23 @@
     $(document).ready(function(){
            
       for( var r = 0 ; r < r_size ; r++ ){
+
             var cur_row = "<tr>";
             for( var c = 0 ; c < c_size ; c++ ){
                 $( '#' + index[r][c] ).css( "background-image" , "url(on.png)" );  
-                cur_row += ( '<td>' +  off_bulb_start + index[r][c] + '" onclick="press(' + r + ',' + c + ')"' + img_end + "</td>" );
+                cur_row += ( '<td>' +  
+                        off_bulb_start + index[r][c][0] + '" onclick="press(' + r + ',' + c + ')"' + img_end + 
+                        on_bulb_start + index[r][c][1] + '" onclick="press(' + r + ',' + c + ')"' + img_end + 
+                        "</td>" );
             }
             cur_row += "</tr>";
+
             $("#Board").append( cur_row );
-        }
 
-
+            for( var c = 0 ; c < c_size ; c++ ){
+                $( "#" + index[r][c][1] ).toggle();
+            }
+      }
  
     });
     </script>
