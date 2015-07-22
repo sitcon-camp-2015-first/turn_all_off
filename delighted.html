@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-enquiv = "Content-Type" content = "text/html" charset="utf-8"/>
+        <script src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"> </script>
+        <script type = "text/javascript">
+            var light = ['http://images.freeimages.com/images/previews/07c/light-bulb-2-1427493.jpg',
+                            'http://images.freeimages.com/images/previews/70a/light-bulb-1-1427502.jpg'];
+            $(document).ready(function(){
+                const x_size = 7;
+                const y_size = 5;
+                var board = new Array ();
+                for (var y = 1; y <= y_size; ++y) {
+                	board [y] = new Array ();
+                	for (var x = 1; x <= x_size; ++x)
+                        board[y][x] = 1;
+                }
+
+            	for (var y = 1; y <= y_size; ++y){
+            		for (var x = 1; x <= x_size; ++x){
+            		    $('body').append ('<img id = "'+ y + '_'+ x + '" src = "'+ light[1] +'" width = "100" height = "100"/>');
+            		}
+            		$('body').append ('<br> </br>');
+                }
+                $ ("img").click (function () {
+            	    var tmp = $ (this).attr('id').split('_');
+                    var y = parseInt (tmp [0]);
+                    var x = parseInt (tmp [1]);
+                    if (y > 1) {
+                        $("#" + (y-1) + "_" + x).attr('src', light[1 - board[y-1][x]]);
+                        board [y-1][x] = 1 - board[y-1][x];
+                    }
+                    if (x > 1) {
+                        $("#" + y + "_" + (x-1)).attr('src', light[1 - board[y][x-1]]);
+                        board [y][x-1] = 1 - board[y][x-1];
+                    }
+                    if (y < y_size) {
+                        $("#" + (y+1) + "_" + x).attr('src', light[1 - board[y+1][x]]);
+                        board [y+1][x] = 1 - board[y+1][x];
+                    }
+                    if (x < x_size) {
+                        $("#" + y + "_" + (x+1)).attr('src', light[1 - board[y][x+1]]);
+                        board [y][x+1] = 1 - board[y][x+1];
+                    }
+                    if (y > 1 && x > 1) {
+                        $("#" + (y-1) + "_" + (x-1)).attr('src', light[1 - board[y-1][x-1]]);
+                        board [y-1][x-1] = 1 - board[y-1][x-1];
+                    }
+                    if (y > 1 && x < x_size) {
+                        $("#" + (y-1) + "_" + (x+1)).attr('src', light[1 - board[y-1][x+1]]);
+                        board [y-1][x+1] = 1 - board[y-1][x+1];
+                    }
+                    if (y < y_size && x > 1) {
+                        $("#" + (y+1) + "_" + (x-1)) .attr('src', light[1 - board[y+1][x-1]]);
+                        board [y+1][x-1] = 1 - board[y+1][x-1];
+                    }
+                    if (y < y_size && x < x_size) {
+                        $("#" + (y+1) + "_" + (x+1)).attr('src', light[1 - board[y+1][x+1]]);
+                        board [y+1][x+1] = 1 - board[y+1][x+1];
+                    }
+                    $("#" + y + "_" + x).attr('src', light[1 - board[y][x]]);
+                    board [y][x] = 1 - board[y][x];
+
+                });
+            });
+        </script>
+    </head>
+    <body bgcolor="#8B4513"> 
+
+    </body>
+</html>
