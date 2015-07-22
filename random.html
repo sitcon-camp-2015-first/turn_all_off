@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-enquiv = "Content-Type" content = "text/html" charset="utf-8"/>
+        <script src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"> </script>
+        <script type = "text/javascript">
+            function rand_to (lim) {
+            	return Math.floor((Math.random() * lim) + 1);
+            }
+            for (var x = 5, y = 5; x <= 10 && y <= 10;) {
+            	var board = new Array ();
+            	for (var i = 1; i <= y; ++i) {
+            		board [i] = new Array ();
+            		for (var j = 1; j <= x; ++j)
+                        board [i][j] = 1;
+            	}
+                for (var step = rand_to (50); step > 0; --step) {
+                	var mx = rand_to (x);
+                	var my = rand_to (y);
+                	board [my][mx] = 1 - board [my][mx];
+                	if (mx > 1)
+                		board [my][mx - 1] = 1 - board [my][mx - 1];
+                	if (my > 1)
+                		board [my - 1][mx] = 1 - board [my - 1][mx];
+                    if (mx < x)
+                		board [my][mx + 1] = 1 - board [my][mx + 1];
+                	if (my < y)
+                		board [my + 1][mx] = 1 - board [my + 1][mx];
+                	if (mx > 1 && my > 1)
+                		board [my - 1][mx - 1] = 1 - board [my - 1][mx - 1];
+                	if (mx < x && my < y)
+                		board [my + 1][mx + 1] = 1 - board [my + 1][mx + 1];
+                	if (mx < x && my > 1)
+                		board [my - 1][mx + 1] = 1 - board [my - 1][mx + 1];
+                    if (mx > 1 && my < y)
+                		board [my + 1][mx - 1] = 1 - board [my + 1][mx - 1];
+                }
+                console.log ('x size : ' + x + ', y size : ' + y);
+                for (var i = 1; i <= y; ++i)
+                    console.log (board [i]);
+                console.log ("\n");
+                if (x <= 10 && rand_to (2) == 1)
+                	++x;
+                else
+                	++y;
+            }
+
+        </script>
+    </head>
+</html>
