@@ -11,8 +11,8 @@
 
     var board = new Array ();
     var index = new Array ();
-    const r_size = 5;
-    const c_size = 5;
+    const r_size = 10;
+    const c_size = 10;
     const size = r_size * c_size;
     var num_on_bulbs = 0;
     var on_bulb_start = '<img src="on.png" id="';
@@ -75,7 +75,7 @@
             node_list[i] = node_list[rn] ;
             node_list[rn] = t;
 
-            press( node_list[i] / base , node_list[i] % base );
+            press( float2int( node_list[i] / base ) , node_list[i] % base );
         }
     }
 
